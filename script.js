@@ -1,23 +1,19 @@
-// const button = document.querySelector("#click")
+const Container = document.querySelector("#container")
 
-// button.onclick = () => {
-//     console.log("hello")
-// }
+const ImgURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
-// const scream = () => {
-//     console.log("yatim")
-// }
-const eventBtn = document.querySelector("#eventbtn")
-eventBtn.addEventListener("click", stepSatu)
-eventBtn.addEventListener("click", stepDua)
+for (let i = 1; i <= 500; i++) {
+	const PokeBall = document.createElement("div")
 
+	PokeBall.classList.add("pokemon");
 
-function stepSatu  (){
-console.log("Hello")
+const ImgPoke = document.createElement("img")
+ImgPoke.src = `${ImgURL}${i}.png`;
+
+const label = document.createElement("span")
+label.innerText = `#${i}`;
+
+PokeBall.appendChild(label)
+PokeBall.appendChild(ImgPoke)
+Container.appendChild(PokeBall)
 }
-
-function stepDua () {
-    console.log("world")
-}
-// eventbtn.onclick = stepSatu
-// eventbtn.onclick = stepDua
