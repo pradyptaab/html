@@ -1,1 +1,1 @@
-console.log("lorem")
+console.log("lor")
