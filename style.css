@@ -1,7 +1,28 @@
-.pokemon {
-    display: inline-block;
-    text-align: center;
+body {
+    margin: 0 auto;
+    font-family: 'Inconsolata', monospace;
+    text-decoration: none;
+    background-image: none;
 }
-.pokemon img {
-    display: block;
+
+h1 {
+    display: flex;
+    justify-content: center;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+color: #0ac4bd;
+}
+img {
+    height: 300px;
+    width: 400px;
+    margin:3px 5px;
+    justify-items: center;
+}
+.bg-info {
+background-color: cadetblue;
+}
+.text {
+    background-color: crimson;
+}
+.danger {
+    border: 3px red solid;
 }

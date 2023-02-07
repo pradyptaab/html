@@ -1,7 +1,9 @@
+const container = document.querySelector("#container");
 const Container = document.querySelector("#container")
 
 const ImgURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
+const ImgURL = "https://"
 for (let i = 1; i <= 500; i++) {
 	const PokeBall = document.createElement("div")
 
