@@ -9,5 +9,4 @@ function myFirst() {
     myDisplayer("Goodbye");
   }
   
-  myFirst();
-  mySecond();
+  console.log(`${myFirst}${mySecond}`)
