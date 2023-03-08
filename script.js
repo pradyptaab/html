@@ -7,7 +7,7 @@ const GenColor = () => {
     const b = Math.floor(Math.random() * 255)
     return `rgb(${r},${g},${b})`
 }
-
+// hide on css
 button.addEventListener("click", function(e) {
     e.stopPropagation()
     container.style.backgroundColor = GenColor()
