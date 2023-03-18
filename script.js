@@ -1,21 +1,17 @@
-const container = document.querySelector("#container");
-const Container = document.querySelector("#container")
+const Button = document.querySelector("#clickme")
 
-const ImgURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+const Heading = document.querySelector("h1")
 
-const ImgURL = "https://"
-for (let i = 1; i <= 500; i++) {
-	const PokeBall = document.createElement("div")
+Button.addEventListener("click", () => {
+	const NewColor = generateRandomColor();
+	document.body.style.backgroundColor = NewColor
+	Heading.innerText =NewColor
+})
 
-	PokeBall.classList.add("pokemon");
+const generateRandomColor = () => {
+	const r = Math.floor(Math.random() * 255)
+	const g = Math.floor(Math.random() * 255)
+	const b = Math.floor(Math.random() * 255)
 
-const ImgPoke = document.createElement("img")
-ImgPoke.src = `${ImgURL}${i}.png`;
-
-const label = document.createElement("span")
-label.innerText = `#${i}`;
-
-PokeBall.appendChild(label)
-PokeBall.appendChild(ImgPoke)
-Container.appendChild(PokeBall)
+	return  `rgb(${r}, ${g}, ${b})`
 }

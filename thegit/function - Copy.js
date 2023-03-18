@@ -6,7 +6,7 @@ function myFirst() {
   }
   
   function mySecond() {
-    myDisplayer("Pradana");
+    myDisplayer("Goodbye");
   }
   
   console.log(`${myFirst}${mySecond}`)
