@@ -9,7 +9,7 @@ form.addEventListener("submit", async (e) => {
   };
   const res = await axios.get(`http://api.tvmaze.com/search/shows`, Config);
   GetImages(res.data);
-  forms.elements.query.value = "";
+  form.elements.query.value = "";
 });
 
 const GetImages = (shows) => {
