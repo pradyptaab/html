@@ -1,17 +1,23 @@
-const Button = document.querySelector("#clickme")
+const form = document.querySelector("#search");
 
-const Heading = document.querySelector("h1")
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const KeyWord = form.elements.query.value;
 
-Button.addEventListener("click", () => {
-	const NewColor = generateRandomColor();
-	document.body.style.backgroundColor = NewColor
-	Heading.innerText =NewColor
-})
+  const Config = {
+    params: { q: KeyWord },
+  };
+  const res = await axios.get(`http://api.tvmaze.com/search/shows`, Config);
+  GetImages(res.data);
+  forms.elements.query.vale = "";
+});
 
-const generateRandomColor = () => {
-	const r = Math.floor(Math.random() * 255)
-	const g = Math.floor(Math.random() * 255)
-	const b = Math.floor(Math.random() * 255)
-
-	return  `rgb(${r}, ${g}, ${b})`
-}
+const GetImages = (shows) => {
+  for (let result of shows) {
+    if (result.show.image) {
+      const Image = document.createElement("img");
+      Image.src = result.show.image.medium;
+      document.body.append(Image);
+    }
+  }
+};
