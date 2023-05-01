@@ -15,9 +15,9 @@ form.addEventListener("submit", async (e) => {
 const GetImages = (shows) => {
   for (let result of shows) {
     if (result.show.image) {
-      const Image = document.createElement("img");
+      const Img = document.createElement("img");
       Image.src = result.show.image.medium;
-      document.body.append(Image);
+      document.body.append(Img);
     }
   }
 };
