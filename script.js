@@ -1,4 +1,4 @@
-const form = document.querySelector("#search");
+const form = document.querySelector("#search-forms");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -9,7 +9,7 @@ form.addEventListener("submit", async (e) => {
   };
   const res = await axios.get(`http://api.tvmaze.com/search/shows`, Config);
   GetImages(res.data);
-  forms.elements.query.vale = "";
+  forms.elements.query.value = "";
 });
 
 const GetImages = (shows) => {
