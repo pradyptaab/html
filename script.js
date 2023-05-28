@@ -8,7 +8,7 @@ form.addEventListener("submit", async (e) => {
     params: { q: KeyWord },
   };
   const res = await axios.get(`http://api.tvmaze.com/search/shows`, Config);
-  GetImages(res.data);
+  GetImages(res.data)
   form.elements.query.value = "";
 });
 
