@@ -1,15 +1,15 @@
-const form = document.querySelector("#search");
+const Form = document.querySelector("#search");
 
-form.addEventListener("submit", async (e) => {
+Form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const KeyWord = form.elements.query.value;
+  const KeyWord = Form.elements.query.value;
 
   const Config = {
     params: { q: KeyWord },
   };
   const res = await axios.get(`http://api.tvmaze.com/search/shows`, Config);
   GetImages(res.data)
-  form.elements.query.value = "";
+  Form.elements.query.value = "";
 });
 
 const GetImages = (shows) => {
