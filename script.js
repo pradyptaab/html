@@ -1,21 +1,18 @@
-const container = document.querySelector("#container");
-const Container = document.querySelector("#container")
+const container = document.querySelector("#container")
+const button = document.querySelector("#changecolor")
 
-const ImgURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
-
-const ImgURL = "https://"
-for (let i = 1; i <= 500; i++) {
-	const PokeBall = document.createElement("div")
-
-	PokeBall.classList.add("pokemon");
-
-const ImgPoke = document.createElement("img")
-ImgPoke.src = `${ImgURL}${i}.png`;
-
-const label = document.createElement("span")
-label.innerText = `#${i}`;
-
-PokeBall.appendChild(label)
-PokeBall.appendChild(ImgPoke)
-Container.appendChild(PokeBall)
+const GenColor = () => {
+    const r = Math.floor(Math.random() * 255)
+    const g = Math.floor(Math.random() * 255)
+    const b = Math.floor(Math.random() * 255)
+    return `rgb(${r},${g},${b})`
 }
+// hide on css
+button.addEventListener("click", function(e) {
+    e.stopPropagation()
+    container.style.backgroundColor = GenColor()
+})
+
+container.addEventListener("click", function(e){
+    container.classList.toggle('hide')
+})
