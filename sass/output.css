@@ -1,0 +1,156 @@
+body {
+  margin: 0;
+  font: 100 helvetica, sans-serif;
+}
+
+.navbar {
+  background-color: #eee3cb;
+  height: 50px;
+  position: fixed;
+}
+.navbar a {
+  color: #526d82;
+  float: left;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px 20px;
+}
+.navbar img {
+  height: 30px;
+  width: 145px;
+}
+.navbar a:hover {
+  background-color: rgba(221, 221, 221, 0.8666666667);
+  color: #212a3e;
+}
+.navbar .right {
+  float: right;
+  width: auto;
+  display: block;
+  padding: 5px;
+}
+
+.headers {
+  background-image: url("header.jpg");
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  border-top: 1px solid #3c366b;
+  border-bottom: 1px solid #3c366b;
+}
+.headers .text-header {
+  text-align: center;
+  padding: 30px;
+}
+.headers .text-header hr {
+  margin: auto;
+  width: 300px;
+  border-color: #718096;
+  margin-bottom: 10px;
+}
+.headers .text-header p {
+  color: #11009e;
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+.judul-header {
+  color: #3c366b;
+  text-shadow: 1px 1px #eee3cb;
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.judul-product {
+  color: #eee3cb;
+  text-shadow: 1px 1px #3c366b;
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.button-basic, .button-secondary, .button-primary {
+  border: none;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  font-family: "Poiret one", cursive;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+
+.button-primary {
+  background-color: #e74c3c;
+}
+
+.button-secondary {
+  background-color: #718096;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 20px;
+}
+
+.item-sepertiga {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.item-duapertiga {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.about {
+  background-image: linear-gradient(to bottom right, rgba(221, 221, 221, 0.8666666667), #eee3cb);
+  height: 400px;
+}
+.about img {
+  border-radius: 100%;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+}
+.about h1 {
+  color: #3c366b;
+  text-shadow: 1px 1px #eee3cb;
+  font-size: 46px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.about h2 {
+  color: #e74c3c;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+.about p {
+  color: #11009e;
+  font-size: 20px;
+}
+
+.product {
+  background-color: #3c366b;
+}
+
+.contact {
+  height: 100px;
+  background-color: #eee3cb;
+  color: #526d82;
+}
+
+.footer {
+  height: 75px;
+  background-color: #526d82;
+  color: #eee3cb;
+}
+
+/*# sourceMappingURL=output.css.map */
