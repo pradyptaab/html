@@ -1,3 +1,7 @@
-* {
-background-color: rebeccapurple;
+body {
+    padding-top: 56px;
+}
+
+.jumbotron {
+    background-color: darkgoldenrod;
 }
