@@ -1,13 +1,14 @@
 $lightColor: #eee3cb;
 $IndigoColor: #3c366b;
 $grayColor: #526d82;
-$RedColor: #e74c3c;
+$RedColor: #B70404;
 $FontStack: helvetica, sans-serif;
 $DarkColor: #212a3e;
 $LightGray: #dddd;
 $gray: #718096;
 $BlueColor: #11009e;
-
+$Orange :#e74c3c;
+$Black :#0000;
 body {
   margin: 0;
   font: 100 $FontStack;
@@ -108,16 +109,25 @@ body {
   font-family: "Poiret one", cursive;
   border-radius: 8px;
   margin-top: 30px;
+
 }
 
 .button-primary {
   @extend.button-basic;
-  background-color: $RedColor;
+  border-color:$Orange;
 }
+.button-primary:hover {
+  background-color: $RedColor;
+  color: $Black
 
+}
 .button-secondary {
   @extend.button-basic;
-  background-color: $gray;
+  border-color: $gray;
+}
+.button-secondary:hover{
+  background-color: $DarkColor;
+  color: $lightColor;
 }
 
 @mixin Item($value) {

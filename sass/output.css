@@ -97,11 +97,23 @@ body {
 }
 
 .button-primary {
-  background-color: #e74c3c;
+  border-color: #e41700 1px;
+}
+
+.button-primary:hover {
+  background-color: #B70404;
+  color: #eee3cb;
+  transition: 1000ms;
 }
 
 .button-secondary {
-  background-color: #718096;
+  border-color: #2b5eab;
+  transition: 1000ms;
+}
+
+.button-secondary:hover {
+  background-color: #212a3e;
+  color: #eee3cb;
 }
 
 .grid-container {
@@ -153,7 +165,7 @@ body {
   margin-bottom: 10px;
 }
 .about h2 {
-  color: #e74c3c;
+  color: #B70404;
   font-size: 32px;
   margin-bottom: 15px;
 }
@@ -236,7 +248,7 @@ body {
   }
 }
 .contact .info i {
-  color: #e74c3c;
+  color: #B70404;
   font-size: 30px;
   margin-right: 10px;
   margin-bottom: 10px;

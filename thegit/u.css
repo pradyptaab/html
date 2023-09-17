@@ -3,5 +3,144 @@ body {
 }
 
 .jumbotron {
-    background-color: darkgoldenrod;
+    text-shadow: #0000 1px 1px;
+}
+
+.background-header {
+    background-image: url("banner2.jpg");
+    background-color: #fafbfc;
+    height: 450px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+h1 {
+    color: aliceblue;
+}
+p {
+    font-weight: bold;
+    color: #fff;
+}
+
+.button-primer {
+    color: #00bd8e;
+    border-color: #0b9b6b;
+    color: #ffff;
+    text-shadow: 0px 0px;
+}
+
+.button-primer:hover {
+background-color: #00bd8e;
+color: #ffff;
+text-shadow: 0px 0px;
+transition: 1000ms;
+}
+
+.btn-second {
+    color: gray;
+    border-color: red;
+    text-shadow: 0px 0px;
+}
+
+.btn-second:hover {
+    transition: 1000ms;
+    background-color: red;
+    color: black;
+}
+
+.service-style {
+    margin-top: 15px;
+    background-color: #fafbfc;
+}
+p {
+    color:gray;
+}
+
+.text-green {
+    color: #0b9b6b;
+}
+
+.bg-red {
+    border-color: orangered;
+    color:black;
+}
+
+.bg-red:hover {
+    transition: 1000ms;
+    background-color: red;
+    color:gold;
+}
+
+h2:before,h2:after {
+    background-color: #00bd8e;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 20%;
+}
+
+h2::before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+h2::after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+.primary-button {
+    background-color: transparent;
+    border-color: #dbdbdb;
+ color: #0b9b6b;
+}
+
+.primary-button:hover{
+    background-color: #0b9b6b;
+    border-color: #dbdbdb;
+ transition: 2000ms;
+    color: #ffff;
+}
+
+.secondary-button {
+    background-color: transparent;
+    border-color: orangered;
+    color: gray;
+}
+
+.secondary-button:hover {
+    background-color: red;
+    color:black;
+    transition: 1000ms;
+}
+
+.third-button {
+    background-color: transparent;
+    border-color: #4F709C;
+    color:#374259;
+}
+
+.third-button:hover {
+    transition: 1000ms;
+    background-color:#1D267D ;
+    color: #F97B22;
+}
+
+.fourth-button {
+    background-color: transparent;
+    border-color: #FF6000;
+    color: #6D5D6E;
+}
+.fourth-button:hover {
+    transition: 1000ms;
+    background-color:#000000 ;
+    color:white ;
+}
+
+.cover {
+    background: no-repeat center/cover;
 }

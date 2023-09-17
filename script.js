@@ -1,24 +1,26 @@
-const Form = document.querySelector("#search")
+const post = document.querySelector("#search");
+post.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-Form.addEventListener("submit", async(e)  => {
-  e.preventDefault()
-  const KeyWord = Form.elements.query.value
-  const Config = {params : 
-    {q : KeyWord}}
+  const KeyWord = form.elements.query.value;
 
-    document.querySelectorAll("img").forEach((img) => img.remove())
+  const Config = {
+    params: { q: KeyWord },
+  };
 
-    const res = await axios.get(`http://api.tvmaze.com/search/shows` , Config)
-    GetImages(res.data)
-    Form.elements.query.value = ""
-})
+  document.querySelectorAll("img").forEach((img) => img.remove())
+  const res = await axios.get(`http://api.tvmaze.com/search/shows` , Config)
+  GetImages(res.data)
+  form.elements.query.value = ""
+});
+
 
 const GetImages = (shows) => {
   for (let result of shows) {
-    if(result.show.image) {
+    if(result.shows.image) {
       const img = document.createElement("img")
-      img.src = result.show.image.medium
-      document.body.append(img)
+      img.src = result.shows.image.medium
+      document.body.append("img")
     }
   }
 }
