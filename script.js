@@ -15,7 +15,7 @@ let product = {
     "price" : "200000" , 
     "homeworld": "https://www.swapi.tech/api/planets/8",
     "url": "https://www.swapi.tech/api/people/3" ,
-    "description" : " I'm is a main antagonist characters on star wars my weapon is a red lightsaber I always wear a black mask and black suit" 
+    "desc" : " I'm is a main antagonist characters on star wars my weapon is a red lightsaber I always wear a black mask and black suit" 
   }
 
 let app = new Vue ({
