@@ -11,14 +11,19 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="#">
-    <div id="app">
-      <h2>{{ name }}</h2>
-      <p> {{edited }}</p>
-      <div class="h3">Rp {{ price }}</div>
-      <div class="h2"> {{ desc }}</div>
-    </div>
+  <body class="">
+    <div class="container" id="app">
+      <div class="row d-flex mb-3 align-item-center">
+        <div class="col-sm-4">
+          <img class="img-fluid" :src="image" :alt="name" />
+          <h2>{{ name }}</h2>
+          <p>{{edited }}</p>
+          <div class="h3">Rp {{ price }}</div>
+          <div class="h2">{{ desc }}</div>
 
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script
