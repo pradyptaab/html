@@ -1,0 +1,20 @@
+.jumbotron {
+    padding-top: 3rem;
+    background-color: #cd9efcfd;
+  }
+  #tentang {
+    background-color: #7fffd4;
+  }
+  #projects {
+    background-color: #cd9efcfd;
+  }
+  #kontak {
+    background-color: #7fffd4;
+  }
+  .card:hover {
+    scale: 1.1;
+  }
+  
+  section {
+    padding-top: 5rem;
+  }

@@ -1,21 +1,20 @@
 .jumbotron {
-    padding-top: 6rem;
-    background-color: #9694FF;
-}
-
-body {
-    min-height: 3000px;
-}
-
-#galleries {
-    background-color: #e2edff;
-}
-#carouselExampleIndicators {
-    width: 500px;
-    height: 500px;
-    
-}
-
-section {
+    padding-top: 3rem;
+    background-color: #cd9efcfd;
+  }
+  #tentang {
+    background-color: #7fffd4;
+  }
+  #projects {
+    background-color: #cd9efcfd;
+  }
+  #kontak {
+    background-color: #7fffd4;
+  }
+  .card:hover {
+    scale: 1.1;
+  }
+  
+  section {
     padding-top: 5rem;
-}
+  }
