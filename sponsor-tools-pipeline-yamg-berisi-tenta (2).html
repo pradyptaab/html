@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SponsorFlow - Sponsor Pipeline & Activation OS</title>
+  <style>
+    /* RESET & CORE VARIABLES - TAILWIND-LIKE DESIGN SYSTEM */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --nav-bg: rgba(255, 255, 255, 0.95);
+      --nav-border: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body.dark {
+      --bg-main: #090d16;
+      --bg-card: #131b2e;
+      --bg-subtle: #1e293b;
+      --border-color: #273549;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-light: #1e1e38;
+      --accent: #22d3ee;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --nav-bg: rgba(19, 27, 46, 0.95);
+      --nav-border: #273549;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 84px;
+      min-height: 100vh;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TYPOGRAPHY & UTILS */
+    h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 9999px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    }
+    .badge-primary { background: var(--primary-light); color: var(--primary); }
+    .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+    .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 16px; font-size: 0.875rem; font-weight: 600; border-radius: var(--radius-sm);
+      border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease; outline: none;
+    }
+    .btn-primary { background: var(--primary); color: #ffffff; }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-secondary { background: var(--bg-subtle); color: var(--text-main); border-color: var(--border-color); }
+    .btn-secondary:hover { background: var(--border-color); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 6px 10px; font-size: 0.75rem; }
+    .btn-block { width: 100%; }
+
+    .input, .select, .textarea {
+      width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color); background: var(--bg-card);
+      color: var(--text-main); font-size: 0.875rem; outline: none; transition: border 0.2s;
+    }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; display: block; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+    /* HEADER */
+    header {
+      background: var(--bg-card); border-bottom: 1px solid var(--border-color);
+      padding: 12px 16px; position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+    .brand-title { display: flex; align-items: center; gap: 8px; font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
+    .brand-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 8px; display: grid; place-items: center; color: #fff; font-size: 14px; }
+    
+    /* BOTTOM TAB BAR (HP-STYLE) */
+    .tab-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 68px;
+      background: var(--nav-bg); border-top: 1px solid var(--nav-border);
+      display: flex; justify-content: space-around; align-items: center;
+      z-index: 50; backdrop-filter: blur(12px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .tab-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 3px; background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 0.68rem; font-weight: 600; padding: 8px 0;
+      transition: color 0.15s, transform 0.1s;
+    }
+    .tab-item.active { color: var(--primary); }
+    .tab-item svg { width: 22px; height: 22px; fill: currentColor; }
+    
+    /* SECTION CONTROLLERS */
+    .app-section { display: none; }
+    .app-section.active { display: block; animation: fadeIn 0.2s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* GRID & LAYOUT HELPER */
+    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 640px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+    .grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 640px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    /* TOKEN AUTH MODAL */
+    #auth-screen {
+      position: fixed; inset: 0; z-index: 100; background: var(--bg-main);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+
+    /* CUSTOM TABS INSIDE SECTION */
+    .sub-tabs { display: flex; gap: 6px; background: var(--bg-subtle); padding: 4px; border-radius: var(--radius-sm); margin-bottom: 16px; overflow-x: auto; }
+    .sub-tab-btn { flex: 1; text-align: center; padding: 8px; font-size: 0.8rem; font-weight: 600; border: none; background: transparent; color: var(--text-muted); border-radius: 6px; cursor: pointer; white-space: nowrap; }
+    .sub-tab-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); }
+
+    /* ITEM CARD IN LIST */
+    .item-card {
+      border: 1px solid var(--border-color); background: var(--bg-card);
+      border-radius: var(--radius-sm); padding: 12px; margin-bottom: 10px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+  </style>
+</head>
+<body class="dark">
+
+  <!-- AUTH SCREEN -->
+  <div id="auth-screen">
+    <div class="card" style="max-width: 380px; width: 100%; text-align: center; padding: 28px 20px;">
+      <div style="width: 54px; height: 54px; margin: 0 auto 16px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 14px; display: grid; place-items: center; color: white;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      </div>
+      <h2 style="font-size: 1.3rem; margin-bottom: 6px;">SponsorFlow OS</h2>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;">Platform Pipeline & Deliverables Event. Masukkan Token Akses Tim.</p>
+      <form id="token-form">
+        <div style="margin-bottom: 14px; text-align: left;">
+          <label for="input-token">Token Akses:</label>
+          <input type="password" id="input-token" class="input" placeholder="Masukkan token..." required autofocus>
+          <small style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Token bawaan: <strong style="color:var(--primary);">SPONSOR2025</strong> (dapat diubah nanti)</small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Buka Akses Pipeline</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand-title">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <span>SponsorFlow</span>
+          <span style="font-size: 0.65rem; font-weight: 500; color: var(--accent); display: block; margin-top: -3px;">Pipeline & Handover OS</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button id="theme-toggle" class="btn btn-secondary btn-sm" title="Toggle Tema">
+          <span id="theme-icon">☀️</span>
+        </button>
+        <span class="badge badge-success">Online & Lokal</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+
+    <!-- TAB 1: PIPELINE & PROSPEK -->
+    <section id="tab-pipeline" class="app-section active">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px;">
+        <div>
+          <h2 style="font-size: 1.3rem;">Prospek & In-Kind Inventory</h2>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Kelola leads sponsor tunai & inventaris barang barter (In-Kind).</p>
+        </div>
+      </div>
+
+      <!-- Sub Tabs Pipeline -->
+      <div class="sub-tabs">
+        <button class="sub-tab-btn active" onclick="switchSubTab('prospect-view', this)">Leads Prospek Sponsor</button>
+        <button class="sub-tab-btn" onclick="switchSubTab('inkind-view', this)">In-Kind Inventory (Barter)</button>
+      </div>
+
+      <!-- VIEW: PROSPECT RESEARCH -->
+      <div id="prospect-view">
+        <div class="card">
+          <h3 style="font-size: 0.95rem; margin-bottom: 10px;">+ Tambah Target Sponsor Baru</h3>
+          <form id="prospect-form" class="grid-2">
+            <div>
+              <label>Nama Brand / Perusahaan</label>
+              <input type="text" id="p-company" class="input" placeholder="Contoh: PT Sumber Pangan / Tokopedia" required>
+            </div>
+            <div>
+              <label>Kategori Industri</label>
+              <select id="p-category" class="select">
+                <option value="FMCG / Makanan & Minuman">FMCG / F&B</option>
+                <option value="Perbankan & Fintech">Perbankan & Fintech</option>
+                <option value="Telko & Internet Provider">Telko & ISP</option>
+                <option value="Otomotif & Transport">Otomotif & Transport</option>
+                <option value="Tech, SaaS, EduTech">Tech & Software</option>
+                <option value="Media & Lifestyle">Media & Lifestyle</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div>
+              <label>Potensi Nilai Sponsor (IDR)</label>
+              <input type="number" id="p-budget" class="input" placeholder="50000000" min="0" required>
+            </div>
+            <div>
+              <label>Status Pipeline</label>
+              <select id="p-status" class="select">
+                <option value="Riset (Need Match)">Riset & Need Match</option>
+                <option value="Pitching Sent">Pitching / Proposal Terkirim</option>
+                <option value="Follow-up Meeting">Follow-up Meeting</option>
+                <option value="Negosiasi Kontrak">Negosiasi Kontrak</option>
+                <option value="DEAL (Closed Won)">DEAL (Closed Won) ✅</option>
+                <option value="Tolak (Closed Lost)">Tolak (Closed Lost) ❌</option>
+              </select>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <label>Catatan Kontak PIC & Strategic Fit</label>
+              <textarea id="p-notes" class="textarea" rows="2" placeholder="PIC: Bpk Andi (Brand Lead), tertarik aktivasi sampling 2000 orang..."></textarea>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <button type="submit" class="btn btn-primary btn-block">Simpan Prospek ke Pipeline</button>
+            </div>
+          </form>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0 8px;">
+          <h4 style="font-size: 0.95rem;">Daftar Prospek (<span id="prospect-count">0</span>)</h4>
+          <span id="pipeline-total" style="font-weight: 700; color: var(--accent); font-size: 0.9rem;">Rp 0</span>
+        </div>
+        <div id="prospect-list"></div>
+      </div>
+
+      <!-- VIEW: IN-KIND INVENTORY -->
+      <div id="inkind-view" style="display: none;">
+        <div class="card">
+          <h3 style="font-size: 0.95rem; margin-bottom: 10px;">+ Catat Barang In-Kind (Barter/Sponsorship Non-Tunai)</h3>
+          <form id="inkind-form" class="grid-2">
+            <div>
+              <label>Nama Item / Layanan Barter</label>
+              <input type="text" id="ik-item" class="input" placeholder="Contoh: 150 Dus Air Mineral / Voucher Belanja" required>
+            </div>
+            <div>
+              <label>Sponsor Penyedia</label>
+              <input type="text" id="ik-sponsor" class="input" placeholder="Nama Brand / Vendor" required>
+            </div>
+            <div>
+              <label>Kuantitas & Satuan</label>
+              <input type="text" id="ik-qty" class="input" placeholder="150 Dus / 200 Pcs" required>
+            </div>
+            <div>
+              <label>Estimasi Valuasi Riil (IDR)</label>
+              <input type="number" id="ik-val" class="input" placeholder="7500000" min="0" required>
+            </div>
+            <div>
+              <label>Status Penerimaan</label>
+              <select id="ik-status" class="select">
+                <option value="Menunggu Pengiriman">Menunggu Pengiriman</option>
+                <option value="Diterima di Gudang">Sudah Diterima di Gudang</option>
+                <option value="Telah Didistribusikan">Telah Didistribusikan</option>
+              </select>
+            </div>
+            <div>
+              <label>PIC Penerima Lapangan</label>
+              <input type="text" id="ik-pic" class="input" placeholder="Nama Divisi Logistik / PIC">
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <button type="submit" class="btn btn-primary btn-block">Simpan Item In-Kind</button>
+            </div>
+          </form>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0 8px;">
+          <h4 style="font-size: 0.95rem;">Total Nilai Barter Terkumpul</h4>
+          <span id="inkind-total" style="font-weight: 700; color: var(--success); font-size: 0.9rem;">Rp 0</span>
+        </div>
+        <div id="inkind-list"></div>
+      </div>
+    </section>
+
+    <!-- TAB 2: PAKET & VALUASI -->
+    <section id="tab-packages" class="app-section">
+      <div style="margin-bottom: 14px;">
+        <h2 style="font-size: 1.3rem;">Benefit Valuation & Package Builder</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Hitung valuasi benefit berdasar CPM & bangun paket sponsor siap jual.</p>
+      </div>
+
+      <!-- Sub Tabs -->
+      <div class="sub-tabs">
+        <button class="sub-tab-btn active" onclick="switchSubTab('valuation-calc-view', this)">Kalkulator Valuasi Benefit</button>
+        <button class="sub-tab-btn" onclick="switchSubTab('package-builder-view', this)">Package Sponsor Builder</button>
+      </div>
+
+      <!-- VALUATION CALCULATOR -->
+      <div id="valuation-calc-view">
+        <div class="card">
+          <h3 style="font-size: 0.95rem; margin-bottom: 12px;">Kalkulator Nilai Paparan (CPM & Branding Value)</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Gunakan formula industri untuk menentukan harga wajar benefit yang ditawarkan.</p>
+          <div class="grid-2">
+            <div>
+              <label>Estimasi Hadirin Fisik (On-ground Attendees)</label>
+              <input type="number" id="calc-attendees" class="input" value="3000" oninput="runValuationCalc()">
+            </div>
+            <div>
+              <label>Estimasi Total Reach Sosial Media (Impressions)</label>
+              <input type="number" id="calc-reach" class="input" value="85000" oninput="runValuationCalc()">
+            </div>
+            <div>
+              <label>Benchmark CPM On-Ground (per 1.000 org)</label>
+              <input type="number" id="calc-cpm-ground" class="input" value="120000" oninput="runValuationCalc()">
+            </div>
+            <div>
+              <label>Benchmark CPM Digital (per 1.000 reach)</label>
+              <input type="number" id="calc-cpm-digi" class="input" value="45000" oninput="runValuationCalc()">
+            </div>
+            <div>
+              <label>Jumlah Booth Eksklusif (Valuasi per Unit)</label>
+              <input type="number" id="calc-booth-val" class="input" value="15000000" oninput="runValuationCalc()">
+            </div>
+            <div>
+              <label>Faktor Goodwill / Prestige Event</label>
+              <select id="calc-prestige" class="select" onchange="runValuationCalc()">
+                <option value="1.0">Standar (1.0x)</option>
+                <option value="1.25">Tinggi / Media Terkenal (1.25x)</option>
+                <option value="1.5">Sangat Bergengsi / Nasional (1.5x)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); margin-top: 14px; border-left: 4px solid var(--accent);">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Estimasi Total Nilai Paparan Sponsor:</div>
+            <div id="calc-result" style="font-size: 1.5rem; font-weight: 800; color: var(--accent); margin: 4px 0;">Rp 0</div>
+            <div id="calc-breakdown" style="font-size: 0.75rem; color: var(--text-muted);">Physical: Rp 0 | Digital: Rp 0 | Booth: Rp 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PACKAGE BUILDER -->
+      <div id="package-builder-view" style="display: none;">
+        <div class="card">
+          <h3 style="font-size: 0.95rem; margin-bottom: 12px;">+ Rakit Paket Sponsorship Baru</h3>
+          <form id="pkg-form" class="grid-2">
+            <div>
+              <label>Tingkatan Paket</label>
+              <input type="text" id="pkg-tier" class="input" placeholder="Contoh: Platinum Sponsor / Official Partner" required>
+            </div>
+            <div>
+              <label>Harga Paket (IDR)</label>
+              <input type="number" id="pkg-price" class="input" placeholder="75000000" required>
+            </div>
+            <div>
+              <label>Slot Kuota Tersedia</label>
+              <input type="number" id="pkg-slots" class="input" placeholder="2" min="1" required>
+            </div>
+            <div>
+              <label>Ukuran Logo di Banner Utama</label>
+              <select id="pkg-logo" class="select">
+                <option value="Paling Besar (Headline)">Paling Besar (Headline Top)</option>
+                <option value="Besar (Tier 1)">Besar (Tier 1)</option>
+                <option value="Sedang (Tier 2)">Sedang (Tier 2)</option>
+                <option value="Standar Bersama">Standar Bersama</option>
+              </select>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <label>Fasilitas & Deliverables (Pemisah tanda koma atau baris baru)</label>
+              <textarea id="pkg-items" class="textarea" rows="3" placeholder="Booth VIP 3x3m, 5 Tiket All-Access, Sambutan 3 Menit, Logo di 10.000 Gelang Tiket, 3x Instagram Feeds & Reels..." required></textarea>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <button type="submit" class="btn btn-primary btn-block">Simpan Paket Sponsor</button>
+            </div>
+          </form>
+        </div>
+
+        <h4 style="font-size: 0.95rem; margin: 16px 0 8px;">Daftar Paket Terdaftar (<span id="pkg-count">0</span>)</h4>
+        <div id="pkg-list"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: HARI-H & LAPORAN -->
+    <section id="tab-handover" class="app-section">
+      <div style="margin-bottom: 14px;">
+        <h2 style="font-size: 1.3rem;">Hari-H Handover & Report Data</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Checklist eksekusi deliverables hari acara & rangkuman pasca-event.</p>
+      </div>
+
+      <!-- Sub Tabs -->
+      <div class="sub-tabs">
+        <button class="sub-tab-btn active" onclick="switchSubTab('handover-view', this)">Checklist Hari-H (Handover)</button>
+        <button class="sub-tab-btn" onclick="switchSubTab('report-view', this)">Sponsor Report Data</button>
+      </div>
+
+      <!-- HANDOVER CHECKLIST -->
+      <div id="handover-view">
+        <div class="card">
+          <h3 style="font-size: 0.95rem; margin-bottom: 10px;">+ Checklist Deliverables Lapangan</h3>
+          <form id="handover-form" class="grid-2">
+            <div>
+              <label>Nama Sponsor Terkait</label>
+              <input type="text" id="ho-sponsor" class="input" placeholder="PT Unilever / Tokopedia" required>
+            </div>
+            <div>
+              <label>Kewajiban Deliverable</label>
+              <input type="text" id="ho-item" class="input" placeholder="Contoh: Pemutaran Video Ad 60s di Main Stage" required>
+            </div>
+            <div>
+              <label>Waktu / Sesi Pelaksanaan</label>
+              <input type="text" id="ho-time" class="input" placeholder="14:30 WIB (Break Sesi 2)" required>
+            </div>
+            <div>
+              <label>PIC Eksekutor & LO Lapangan</label>
+              <input type="text" id="ho-pic" class="input" placeholder="Sdr. Rian (Divisi Panggung)" required>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <button type="submit" class="btn btn-primary btn-block">Tambahkan ke Checklist Eksekusi</button>
+            </div>
+          </form>
+        </div>
+
+        <div style="display:flex; justify-content: space-between; align-items:center; margin: 16px 0 8px;">
+          <h4 style="font-size: 0.95rem;">Monitoring Handover (<span id="ho-progress">0% Selesai</span>)</h4>
+        </div>
+        <div id="handover-list"></div>
+      </div>
+
+      <!-- POST-EVENT REPORT DATA -->
+      <div id="report-view" style="display: none;">
+        <div class="card">
+          <h3 style="font-size: 0.95rem; margin-bottom: 12px;">Ringkasan Metrik Laporan Sponsor (Post-Event Report)</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Isi data realisasi performa event untuk dikirim ke sponsor sebagai LPJ formal.</p>
+          
+          <div class="grid-2">
+            <div>
+              <label>Realisasi Hadirin Lapangan (Actual Footfall)</label>
+              <input type="number" id="rep-attendees" class="input" value="3420" oninput="saveReportData()">
+            </div>
+            <div>
+              <label>Total Reach Media Sosial / Kampanye</label>
+              <input type="number" id="rep-reach" class="input" value="112000" oninput="saveReportData()">
+            </div>
+            <div>
+              <label>Kuantitas Goodie Bag / Sampel Tersebar</label>
+              <input type="number" id="rep-sampling" class="input" value="1800" oninput="saveReportData()">
+            </div>
+            <div>
+              <label>Kepuasan Sponsor (Survey Skor 1-100)</label>
+              <input type="number" id="rep-satisfaction" class="input" value="94" oninput="saveReportData()">
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <label>Highlight Dokumentasi & Bukti Tayang (Link Folder / Catatan)</label>
+              <textarea id="rep-links" class="textarea" rows="2" placeholder="Link Google Drive foto booth, klip video LED, dan liputan media..." oninput="saveReportData()"></textarea>
+            </div>
+          </div>
+          
+          <div style="margin-top: 16px; display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="exportReportSummary()">Salin Ringkasan LPJ ke Clipboard</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SCRIPT PROPOSAL GENERATOR -->
+    <section id="tab-script" class="app-section">
+      <div style="margin-bottom: 14px;">
+        <h2 style="font-size: 1.3rem;">Generator Pitch & Naskah Proposal</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Buat naskah email pitch, cold message WhatsApp, dan opening speech sponsor yang disesuaikan secara instan.</p>
+      </div>
+
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <label>Nama Event Kamu</label>
+            <input type="text" id="gen-event-name" class="input" value="Nusantara Tech & Art Summit 2025">
+          </div>
+          <div>
+            <label>Tipe Event</label>
+            <select id="gen-event-type" class="select">
+              <option value="Festival Musik & Seni">Festival Musik & Seni</option>
+              <option value="Konferensi Bisnis & Expo">Konferensi Bisnis & Expo</option>
+              <option value="Kompetisi Olahraga & E-Sports">Kompetisi Olahraga & E-Sports</option>
+              <option value="Seminar Akademik & Kampus">Seminar Akademik & Kampus</option>
+              <option value="Bazar Kuliner & UMKM">Bazar Kuliner & UMKM</option>
+            </select>
+          </div>
+          <div>
+            <label>Nama Perusahaan Target</label>
+            <input type="text" id="gen-target-brand" class="input" placeholder="Contoh: PT Bank Mandiri / Tokopedia">
+          </div>
+          <div>
+            <label>Nama PIC Target (Bila Ada)</label>
+            <input type="text" id="gen-pic-name" class="input" placeholder="Contoh: Bpk. Budi Santoso (Brand Manager)">
+          </div>
+          <div>
+            <label>Profil Target Audiens Utama</label>
+            <input type="text" id="gen-target-aud" class="input" value="Generasi Muda, Tech Enthusiast, Umur 19-35 Tahun">
+          </div>
+          <div>
+            <label>Format Script yang Dibutuhkan</label>
+            <select id="gen-format" class="select">
+              <option value="email">Email Pitching Formal & Menjual</option>
+              <option value="wa">Cold Message WhatsApp Pendek & Menarik</option>
+              <option value="verbal">Verbal Elevator Pitch (30 Detik)</option>
+              <option value="speech">Opening Sambutan Terima Kasih Sponsor di Panggung</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top: 14px;">
+          <button class="btn btn-primary btn-block" onclick="generatePitchScript()">⚡ Generate Naskah Proposal Sekarang</button>
+        </div>
+      </div>
+
+      <div class="card" style="position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h4 style="font-size: 0.9rem;">Hasil Draft Naskah Siap Pakai:</h4>
+          <button class="btn btn-secondary btn-sm" onclick="copyGeneratedScript()">📋 Salin Teks</button>
+        </div>
+        <div id="script-output" style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; font-family: inherit; border: 1px dashed var(--border-color); min-height: 120px;">
+Silakan isi formulir di atas lalu klik 'Generate Naskah Proposal' untuk mendapatkan draft script penawaran yang dipersonalisasi!
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: PENGATURAN, RIWAYAT & INFO -->
+    <section id="tab-settings" class="app-section">
+      <div style="margin-bottom: 14px;">
+        <h2 style="font-size: 1.3rem;">Pengaturan, Riwayat & Panduan</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Kelola autentikasi token, log riwayat pipeline, serta panduan operasional.</p>
+      </div>
+
+      <!-- KREDENSIAL TOKEN -->
+      <div class="card">
+        <h3 style="font-size: 0.95rem; margin-bottom: 8px;">Keamanan & Token Akses</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Ubah token rahasia yang digunakan tim untuk membuka tool ini.</p>
+        <div class="grid-2">
+          <div>
+            <label>Token Akses Baru</label>
+            <input type="text" id="set-token-input" class="input" placeholder="Ketik token baru...">
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button class="btn btn-primary btn-block" onclick="updateAppToken()">Simpan Token Baru</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIWAYAT AKTIVITAS (HISTORY YANG BISA DIHAPUS) -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+          <h3 style="font-size: 0.95rem;">Riwayat Log Aktivitas (<span id="history-count">0</span>)</h3>
+          <button class="btn btn-danger btn-sm" onclick="clearAllHistory()">Hapus Semua Riwayat</button>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">Catatan transaksi, pembuatan paket, serta eksekusi di SponsorFlow.</p>
+        <div id="history-log-list" style="max-height: 220px; overflow-y: auto;"></div>
+      </div>
+
+      <!-- PANDUAN PENGGUNAAN -->
+      <div class="card">
+        <h3 style="font-size: 0.95rem; margin-bottom: 8px;">📖 Panduan Alur Sponsorship Event</h3>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;">
+          <ol style="padding-left: 18px; margin-bottom: 10px;">
+            <li><strong>Riset & Need-Match:</strong> Catat brand di tab Pipeline. Pastikan audience target selaras dengan produk mereka.</li>
+            <li><strong>Benefit Valuation:</strong> Buka tab Paket & Valuasi, kalkulasi CPM reach agar harga paket yang Anda ajukan memiliki basis data yang kuat.</li>
+            <li><strong>Proposal Script:</strong> Generate email pitch atau pesan WhatsApp langsung dari tab Script untuk meningkatkan respon PIC Brand.</li>
+            <li><strong>In-Kind Inventory:</strong> Jangan tolak tawaran barter; catat air minum, sound system, atau voucher dan hitung sebagai penghematan anggaran belanja.</li>
+            <li><strong>Hari-H Handover:</strong> Tugaskan LO di tab Handover untuk memastikan logo, booth, dan slot panggung terlaksana 100%.</li>
+            <li><strong>Sponsor Report:</strong> Ekspor ringkasan metrik LPJ maksimal H+7 setelah acara selesai untuk retensi sponsor tahun depan.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- TENTANG & FOOTER -->
+      <div class="card" style="text-align: center;">
+        <h4 style="font-size: 0.9rem;">SponsorFlow OS v2.4</h4>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin: 4px 0 12px;">Sistem manajemen terpadu pipeline sponsorship & handover event offline-first.</p>
+        <button class="btn btn-secondary btn-sm" onclick="lockSession()">Kunci Sesi (Logout)</button>
+        <div style="margin-top: 14px; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 10px;">
+          Data disimpan secara lokal di browser Anda (LocalStorage). Aman, cepat & tanpa server luar.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM FIXED NAVIGATION BAR -->
+  <nav class="tab-bar">
+    <button class="tab-item active" onclick="navigateTab('tab-pipeline', this)">
+      <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+      <span>Pipeline</span>
+    </button>
+    <button class="tab-item" onclick="navigateTab('tab-packages', this)">
+      <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+      <span>Paket & CPM</span>
+    </button>
+    <button class="tab-item" onclick="navigateTab('tab-handover', this)">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      <span>Hari-H & LPJ</span>
+    </button>
+    <button class="tab-item" onclick="navigateTab('tab-script', this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      <span>Script Pitch</span>
+    </button>
+    <button class="tab-item" onclick="navigateTab('tab-settings', this)">
+      <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      <span>Pengaturan</span>
+    </button>
+  </nav>
+
+  <!-- JAVASCRIPT STATE ENGINE -->
+  <script>
+    // DATA STATE STORE & LOCALSTORAGE SAFE WRAPPER
+    const DB_KEYS = {
+      TOKEN: 'sf_app_token',
+      SESSION: 'sf_session_logged',
+      THEME: 'sf_app_theme',
+      PROSPECTS: 'sf_prospects',
+      INKIND: 'sf_inkind',
+      PACKAGES: 'sf_packages',
+      HANDOVER: 'sf_handover',
+      REPORT: 'sf_report_data',
+      HISTORY: 'sf_history'
+    };
+
+    function safeGet(key, defaultVal) {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : defaultVal;
+      } catch (e) {
+        return defaultVal;
+      }
+    }
+
+    function safeSet(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {
+        console.error("Storage Error", e);
+      }
+    }
+
+    // STATE INITIALIZATION
+    let appState = {
+      token: safeGet(DB_KEYS.TOKEN, 'SPONSOR2025'),
+      isLoggedIn: safeGet(DB_KEYS.SESSION, false),
+      theme: safeGet(DB_KEYS.THEME, 'dark'),
+      prospects: safeGet(DB_KEYS.PROSPECTS, [
+        { id: 1, company: 'PT Bank Central Nusantara', category: 'Perbankan & Fintech', budget: 120000000, status: 'DEAL (Closed Won)', notes: 'Sponsor Utama Panggung & Integrasi QRIS Pembayaran Booth.' },
+        { id: 2, company: 'Kopi Kenangan Senja', category: 'FMCG / Makanan & Minuman', budget: 35000000, status: 'Follow-up Meeting', notes: 'Tertarik booth ukuran 3x3m & sampling 1500 cup.' }
+      ]),
+      inkind: safeGet(DB_KEYS.INKIND, [
+        { id: 1, item: '300 Box Air Mineral 600ml', sponsor: 'Le Minerale Local Dist', qty: '300 Box', val: 15000000, status: 'Diterima di Gudang', pic: 'Dito (Logistik)' },
+        { id: 2, item: 'Voucher Potongan Belanja Rp50k (x500)', sponsor: 'E-Commerce XYZ', qty: '500 Pcs', val: 25000000, status: 'Menunggu Pengiriman', pic: 'Sari (Ticketing)' }
+      ]),
+      packages: safeGet(DB_KEYS.PACKAGES, [
+        { id: 1, tier: 'Titanium Title Sponsor', price: 150000000, slots: 1, logo: 'Paling Besar (Headline)', items: 'Naming rights panggung utama, Booth VIP 4x4m, Sambutan 5 menit, Logo terbesar di seluruh materi promosi, 10 VIP Pass' },
+        { id: 2, tier: 'Gold Partner', price: 50000000, slots: 3, logo: 'Besar (Tier 1)', items: 'Booth standar 3x3m, 4 VIP Pass, Logo di materi cetak & digital, Ad lips MC 5x' }
+      ]),
+      handover: safeGet(DB_KEYS.HANDOVER, [
+        { id: 1, sponsor: 'PT Bank Central Nusantara', item: 'Pemasangan Giant Backdrop Logo di Stage 1', time: '08:00 WIB', pic: 'Rian Stage', completed: true },
+        { id: 2, sponsor: 'PT Bank Central Nusantara', item: 'MC Ad-Lips & Penayangan Video Profil di Layar LED', time: '13:00 & 16:30 WIB', pic: 'Sarah LO', completed: false },
+        { id: 3, sponsor: 'Kopi Kenangan Senja', item: 'Akses Kelistrikan & Air Bersih di Booth Sampling', time: '07:30 WIB', pic: 'Bambang Teknisi', completed: true }
+      ]),
+      report: safeGet(DB_KEYS.REPORT, {
+        attendees: 3420,
+        reach: 112000,
+        sampling: 1800,
+        satisfaction: 94,
+        links: 'https://drive.google.com/sponsor-event-docs-2025'
+      }),
+      history: safeGet(DB_KEYS.HISTORY, [
+        { id: 1, time: new Date().toLocaleString('id-ID'), text: 'Aplikasi SponsorFlow diinisialisasi.' }
+      ])
+    };
+
+    // LOG HISTORY HELPER
+    function addHistory(text) {
+      const entry = {
+        id: Date.now(),
+        time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        text: text
+      };
+      appState.history.unshift(entry);
+      if (appState.history.length > 50) appState.history.pop();
+      safeSet(DB_KEYS.HISTORY, appState.history);
+      renderHistory();
+    }
+
+    function clearAllHistory() {
+      if (confirm('Yakin ingin menghapus seluruh rekaman riwayat?')) {
+        appState.history = [];
+        safeSet(DB_KEYS.HISTORY, []);
+        renderHistory();
+      }
+    }
+
+    // NUMBER FORMATTING IDR
+    function formatIDR(num) {
+      return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+    }
+
+    // AUTH ENGINE
+    function checkAuth() {
+      const authScreen = document.getElementById('auth-screen');
+      if (appState.isLoggedIn) {
+        authScreen.style.display = 'none';
+      } else {
+        authScreen.style.display = 'flex';
+      }
+    }
+
+    document.getElementById('token-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const entered = document.getElementById('input-token').value.trim();
+      if (entered === appState.token) {
+        appState.isLoggedIn = true;
+        safeSet(DB_KEYS.SESSION, true);
+        addHistory('Autentikasi berhasil masuk ke sistem.');
+        checkAuth();
+      } else {
+        alert('Token akses salah! Hubungi Event Lead atau periksa token bawaan.');
+      }
+    });
+
+    function lockSession() {
+      appState.isLoggedIn = false;
+      safeSet(DB_KEYS.SESSION, false);
+      checkAuth();
+    }
+
+    function updateAppToken() {
+      const val = document.getElementById('set-token-input').value.trim();
+      if (!val) {
+        alert('Token tidak boleh kosong!');
+        return;
+      }
+      appState.token = val;
+      safeSet(DB_KEYS.TOKEN, val);
+      document.getElementById('set-token-input').value = '';
+      addHistory(`Token akses diubah oleh pengguna.`);
+      alert(`Token sukses diperbarui menjadi: ${val}`);
+    }
+
+    // THEME CONTROLLER
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('theme-icon').textContent = '☀️';
+      } else {
+        document.body.classList.remove('dark');
+        document.getElementById('theme-icon').textContent = '🌙';
+      }
+      safeSet(DB_KEYS.THEME, theme);
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(appState.theme);
+    });
+
+    // NAVIGATION
+    function navigateTab(tabId, btn) {
+      document.querySelectorAll('.app-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchSubTab(viewId, btn) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const container = parent.parentElement;
+      if (viewId === 'prospect-view' || viewId === 'inkind-view') {
+        document.getElementById('prospect-view').style.display = viewId === 'prospect-view' ? 'block' : 'none';
+        document.getElementById('inkind-view').style.display = viewId === 'inkind-view' ? 'block' : 'none';
+      } else if (viewId === 'valuation-calc-view' || viewId === 'package-builder-view') {
+        document.getElementById('valuation-calc-view').style.display = viewId === 'valuation-calc-view' ? 'block' : 'none';
+        document.getElementById('package-builder-view').style.display = viewId === 'package-builder-view' ? 'block' : 'none';
+      } else if (viewId === 'handover-view' || viewId === 'report-view') {
+        document.getElementById('handover-view').style.display = viewId === 'handover-view' ? 'block' : 'none';
+        document.getElementById('report-view').style.display = viewId === 'report-view' ? 'block' : 'none';
+      }
+    }
+
+    // 1. PROSPECT PIPELINE MODULE
+    document.getElementById('prospect-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const company = document.getElementById('p-company').value.trim();
+      const category = document.getElementById('p-category').value;
+      const budget = parseFloat(document.getElementById('p-budget').value) || 0;
+      const status = document.getElementById('p-status').value;
+      const notes = document.getElementById('p-notes').value.trim();
+
+      const newProspect = {
+        id: Date.now(),
+        company, category, budget, status, notes
+      };
+
+      appState.prospects.unshift(newProspect);
+      safeSet(DB_KEYS.PROSPECTS, appState.prospects);
+      addHistory(`Menambah prospek sponsor: ${company} (${formatIDR(budget)})`);
+      this.reset();
+      renderProspects();
+    });
+
+    function deleteProspect(id) {
+      const p = appState.prospects.find(x => x.id === id);
+      if (confirm(`Hapus prospek "${p ? p.company : 'ini'}"?`)) {
+        appState.prospects = appState.prospects.filter(x => x.id !== id);
+        safeSet(DB_KEYS.PROSPECTS, appState.prospects);
+        addHistory(`Menghapus prospek: ${p ? p.company : id}`);
+        renderProspects();
+      }
+    }
+
+    function updateProspectStatus(id, newStatus) {
+      const p = appState.prospects.find(x => x.id === id);
+      if (p) {
+        p.status = newStatus;
+        safeSet(DB_KEYS.PROSPECTS, appState.prospects);
+        addHistory(`Ubah status prospek ${p.company} -> ${newStatus}`);
+        renderProspects();
+      }
+    }
+
+    function renderProspects() {
+      const list = document.getElementById('prospect-list');
+      const countEl = document.getElementById('prospect-count');
+      const totalEl = document.getElementById('pipeline-total');
+
+      countEl.textContent = appState.prospects.length;
+      let total = 0;
+      appState.prospects.forEach(p => total += Number(p.budget || 0));
+      totalEl.textContent = 'Total: ' + formatIDR(total);
+
+      if (appState.prospects.length === 0) {
+        list.innerHTML = `<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Belum ada prospek sponsor terdaftar.</div>`;
+        return;
+      }
+
+      list.innerHTML = appState.prospects.map(p => {
+        let badgeClass = 'badge-primary';
+        if (p.status.includes('DEAL')) badgeClass = 'badge-success';
+        if (p.status.includes('Tolak')) badgeClass = 'badge-danger';
+        if (p.status.includes('Meeting') || p.status.includes('Negosiasi')) badgeClass = 'badge-warning';
+
+        return `
+          <div class="item-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <strong style="font-size:0.95rem;">${p.company}</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted); display:block;">${p.category}</span>
+              </div>
+              <span class="badge ${badgeClass}">${p.status}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+              <span style="font-size:1.05rem; font-weight:700; color:var(--primary);">${formatIDR(p.budget)}</span>
+              <div style="display:flex; gap:6px;">
+                <select class="select" style="padding:4px 8px; font-size:0.75rem; width:auto;" onchange="updateProspectStatus(${p.id}, this.value)">
+                  <option value="" disabled selected>Ganti Status...</option>
+                  <option value="Riset (Need Match)">Riset</option>
+                  <option value="Pitching Sent">Proposal Terkirim</option>
+                  <option value="Follow-up Meeting">Meeting</option>
+                  <option value="Negosiasi Kontrak">Negosiasi</option>
+                  <option value="DEAL (Closed Won)">DEAL ✅</option>
+                  <option value="Tolak (Closed Lost)">Tolak ❌</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="deleteProspect(${p.id})">✕</button>
+              </div>
+            </div>
+            ${p.notes ? `<p style="font-size:0.78rem; color:var(--text-muted); margin-top:4px; background:var(--bg-subtle); padding:6px 8px; border-radius:6px;">💡 ${p.notes}</p>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 2. IN-KIND INVENTORY MODULE
+    document.getElementById('inkind-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const item = document.getElementById('ik-item').value.trim();
+      const sponsor = document.getElementById('ik-sponsor').value.trim();
+      const qty = document.getElementById('ik-qty').value.trim();
+      const val = parseFloat(document.getElementById('ik-val').value) || 0;
+      const status = document.getElementById('ik-status').value;
+      const pic = document.getElementById('ik-pic').value.trim() || 'Tim Logistik';
+
+      const entry = {
+        id: Date.now(), item, sponsor, qty, val, status, pic
+      };
+
+      appState.inkind.unshift(entry);
+      safeSet(DB_KEYS.INKIND, appState.inkind);
+      addHistory(`Menambah barter in-kind: ${item} dari ${sponsor}`);
+      this.reset();
+      renderInKind();
+    });
+
+    function deleteInKind(id) {
+      if (confirm('Hapus item barter ini?')) {
+        appState.inkind = appState.inkind.filter(x => x.id !== id);
+        safeSet(DB_KEYS.INKIND, appState.inkind);
+        addHistory(`Menghapus barter in-kind id:${id}`);
+        renderInKind();
+      }
+    }
+
+    function renderInKind() {
+      const list = document.getElementById('inkind-list');
+      const totalEl = document.getElementById('inkind-total');
+      let total = 0;
+      appState.inkind.forEach(i => total += Number(i.val || 0));
+      totalEl.textContent = formatIDR(total);
+
+      if (appState.inkind.length === 0) {
+        list.innerHTML = `<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Belum ada inventaris in-kind.</div>`;
+        return;
+      }
+
+      list.innerHTML = appState.inkind.map(i => `
+        <div class="item-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <strong style="font-size:0.92rem;">${i.item}</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted); display:block;">Penyedia: ${i.sponsor} | Jml: ${i.qty}</span>
+            </div>
+            <span class="badge ${i.status.includes('Diterima') ? 'badge-success' : 'badge-warning'}">${i.status}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+            <div>
+              <span style="font-size:0.72rem; color:var(--text-muted);">Valuasi Riil: </span>
+              <span style="font-weight:700; color:var(--success); font-size:0.9rem;">${formatIDR(i.val)}</span>
+              <span style="font-size:0.72rem; color:var(--text-muted); margin-left:8px;">PIC: ${i.pic}</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="deleteInKind(${i.id})">Hapus</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 3. CPM & BENEFIT VALUATION CALCULATOR
+    function runValuationCalc() {
+      const attendees = parseFloat(document.getElementById('calc-attendees').value) || 0;
+      const reach = parseFloat(document.getElementById('calc-reach').value) || 0;
+      const cpmGround = parseFloat(document.getElementById('calc-cpm-ground').value) || 0;
+      const cpmDigi = parseFloat(document.getElementById('calc-cpm-digi').value) || 0;
+      const boothVal = parseFloat(document.getElementById('calc-booth-val').value) || 0;
+      const multiplier = parseFloat(document.getElementById('calc-prestige').value) || 1.0;
+
+      const physicalValue = (attendees / 1000) * cpmGround;
+      const digitalValue = (reach / 1000) * cpmDigi;
+      const subtotal = physicalValue + digitalValue + boothVal;
+      const totalValuation = subtotal * multiplier;
+
+      document.getElementById('calc-result').textContent = formatIDR(Math.round(totalValuation));
+      document.getElementById('calc-breakdown').textContent = 
+        `Fisik CPM: ${formatIDR(Math.round(physicalValue))} | Digital CPM: ${formatIDR(Math.round(digitalValue))} | Booth: ${formatIDR(boothVal)} (Faktor: ${multiplier}x)`;
+    }
+
+    // 4. PACKAGE BUILDER MODULE
+    document.getElementById('pkg-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const tier = document.getElementById('pkg-tier').value.trim();
+      const price = parseFloat(document.getElementById('pkg-price').value) || 0;
+      const slots = parseInt(document.getElementById('pkg-slots').value) || 1;
+      const logo = document.getElementById('pkg-logo').value;
+      const items = document.getElementById('pkg-items').value.trim();
+
+      const newPkg = { id: Date.now(), tier, price, slots, logo, items };
+      appState.packages.push(newPkg);
+      safeSet(DB_KEYS.PACKAGES, appState.packages);
+      addHistory(`Menyusun paket sponsor: ${tier} (${formatIDR(price)})`);
+      this.reset();
+      renderPackages();
+    });
+
+    function deletePackage(id) {
+      if (confirm('Hapus paket sponsor ini?')) {
+        appState.packages = appState.packages.filter(x => x.id !== id);
+        safeSet(DB_KEYS.PACKAGES, appState.packages);
+        addHistory(`Menghapus paket id:${id}`);
+        renderPackages();
+      }
+    }
+
+    function renderPackages() {
+      const list = document.getElementById('pkg-list');
+      const countEl = document.getElementById('pkg-count');
+      countEl.textContent = appState.packages.length;
+
+      if (appState.packages.length === 0) {
+        list.innerHTML = `<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Belum ada paket sponsor tersimpan.</div>`;
+        return;
+      }
+
+      list.innerHTML = appState.packages.map(p => `
+        <div class="item-card" style="border-left: 4px solid var(--primary);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <strong style="font-size:1.05rem;">${p.tier}</strong>
+              <span class="badge badge-primary" style="margin-left:6px;">${p.slots} Slot Kuota</span>
+            </div>
+            <span style="font-size:1.15rem; font-weight:800; color:var(--primary);">${formatIDR(p.price)}</span>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">
+            Eksposur Logo: <strong>${p.logo}</strong>
+          </div>
+          <div style="font-size:0.82rem; margin: 6px 0; background:var(--bg-subtle); padding:8px; border-radius:6px; line-height:1.4;">
+            ${p.items}
+          </div>
+          <div style="display:flex; justify-content:flex-end;">
+            <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="deletePackage(${p.id})">Hapus Paket</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 5. EVENT DAY HANDOVER MODULE
+    document.getElementById('handover-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sponsor = document.getElementById('ho-sponsor').value.trim();
+      const item = document.getElementById('ho-item').value.trim();
+      const time = document.getElementById('ho-time').value.trim();
+      const pic = document.getElementById('ho-pic').value.trim();
+
+      const newHandover = {
+        id: Date.now(), sponsor, item, time, pic, completed: false
+      };
+
+      appState.handover.push(newHandover);
+      safeSet(DB_KEYS.HANDOVER, appState.handover);
+      addHistory(`Menambah checklist deliverable: ${sponsor} - ${item}`);
+      this.reset();
+      renderHandover();
+    });
+
+    function toggleHandover(id) {
+      const item = appState.handover.find(x => x.id === id);
+      if (item) {
+        item.completed = !item.completed;
+        safeSet(DB_KEYS.HANDOVER, appState.handover);
+        addHistory(`Checklist "${item.item}" -> ${item.completed ? 'SELESAI' : 'PENDING'}`);
+        renderHandover();
+      }
+    }
+
+    function deleteHandover(id) {
+      appState.handover = appState.handover.filter(x => x.id !== id);
+      safeSet(DB_KEYS.HANDOVER, appState.handover);
+      renderHandover();
+    }
+
+    function renderHandover() {
+      const list = document.getElementById('handover-list');
+      const progressEl = document.getElementById('ho-progress');
+
+      const total = appState.handover.length;
+      const done = appState.handover.filter(x => x.completed).length;
+      const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+      progressEl.textContent = `${pct}% Selesai (${done}/${total})`;
+
+      if (total === 0) {
+        list.innerHTML = `<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Belum ada item checklist hari-H.</div>`;
+        return;
+      }
+
+      list.innerHTML = appState.handover.map(h => `
+        <div class="item-card" style="background:${h.completed ? 'rgba(16, 185, 129, 0.08)' : 'var(--bg-card)'}; border-color:${h.completed ? 'var(--success)' : 'var(--border-color)'};">
+          <div style="display:flex; align-items:flex-start; gap:10px;">
+            <input type="checkbox" ${h.completed ? 'checked' : ''} onchange="toggleHandover(${h.id})" style="width:18px; height:18px; margin-top:3px; cursor:pointer; accent-color:var(--success);">
+            <div style="flex:1;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <strong style="font-size:0.9rem; text-decoration:${h.completed ? 'line-through' : 'none'}; color:${h.completed ? 'var(--text-muted)' : 'var(--text-main)'};">${h.item}</strong>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Sponsor: <strong>${h.sponsor}</strong> | Jadwal: <strong>${h.time}</strong></div>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="color:var(--danger); padding:2px 6px;" onclick="deleteHandover(${h.id})">✕</button>
+              </div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">
+                👤 PIC Lapangan: <span style="color:var(--primary); font-weight:600;">${h.pic}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 6. REPORT DATA
+    function saveReportData() {
+      appState.report = {
+        attendees: document.getElementById('rep-attendees').value,
+        reach: document.getElementById('rep-reach').value,
+        sampling: document.getElementById('rep-sampling').value,
+        satisfaction: document.getElementById('rep-satisfaction').value,
+        links: document.getElementById('rep-links').value
+      };
+      safeSet(DB_KEYS.REPORT, appState.report);
+    }
+
+    function loadReportData() {
+      if (appState.report) {
+        document.getElementById('rep-attendees').value = appState.report.attendees || '';
+        document.getElementById('rep-reach').value = appState.report.reach || '';
+        document.getElementById('rep-sampling').value = appState.report.sampling || '';
+        document.getElementById('rep-satisfaction').value = appState.report.satisfaction || '';
+        document.getElementById('rep-links').value = appState.report.links || '';
+      }
+    }
+
+    function exportReportSummary() {
+      const r = appState.report;
+      const text = `LAPORAN PERFORMA EKSEKUSI SPONSORSHIP
+=======================================
+Total Hadirin Riil: ${Number(r.attendees).toLocaleString('id-ID')} orang
+Total Jangkauan Promosi: ${Number(r.reach).toLocaleString('id-ID')} impressions
+Sampel / Merchandise Tersebar: ${Number(r.sampling).toLocaleString('id-ID')} unit
+Indeks Kepuasan Sponsor: ${r.satisfaction}%
+Dokumentasi Bukti Tayang: ${r.links}
+
+Dihasilkan melalui SponsorFlow OS`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Ringkasan LPJ berhasil disalin ke clipboard!');
+        addHistory('Mengekspor ringkasan LPJ ke clipboard');
+      }).catch(() => {
+        alert('Gagal menyalin otomatis. Silakan salin manual.');
+      });
+    }
+
+    // 7. PROPOSAL PITCH SCRIPT GENERATOR
+    function generatePitchScript() {
+      const eventName = document.getElementById('gen-event-name').value.trim() || 'Event Kami';
+      const eventType = document.getElementById('gen-event-type').value;
+      const targetBrand = document.getElementById('gen-target-brand').value.trim() || '[Nama Brand]';
+      const picName = document.getElementById('gen-pic-name').value.trim() || 'Bapak/Ibu Pimpinan Kemitraan';
+      const audience = document.getElementById('gen-target-aud').value.trim() || 'Generasi Muda Aktif';
+      const format = document.getElementById('gen-format').value;
+
+      let result = '';
+
+      if (format === 'email') {
+        result = `Subjek: Peluang Kolaborasi Strategis: ${targetBrand} x ${eventName}
+
+Kepada Yth. ${picName},
+Tim Partnership & Brand Marketing ${targetBrand}
+Di tempat,
+
+Salam hangat dari Tim Penyelenggara ${eventName}.
+
+Kami mencermati kiprah luar biasa ${targetBrand} yang konsisten menghadirkan produk berkualitas dan dekat dengan audiens produktif. Bersama surel ini, kami ingin mengundang ${targetBrand} sebagai Mitra Resmi dalam perhelatan akbar kami:
+
+• Nama Agenda : ${eventName} (${eventType})
+• Target Audiens: ${audience}
+• Estimasi Paparan : 5.000+ Pengunjung Langsung & 100.000+ Digital Reach
+
+Mengapa ${targetBrand} adalah mitra ideal untuk ${eventName}?
+1. Direct Brand Immersion: Kami menyediakan zona booth sampling eksklusif di titik lalu-lintas tertinggi pengunjung.
+2. High-Trust Amplification: Pengenalan produk ${targetBrand} terintegrasi dalam aktivitas panggung utama dan kampanye media sosial kami.
+3. Tailored Return-on-Objective (ROO): Kami siap mendesain aktivasi khusus agar selaras dengan target KPI ${targetBrand} di kuartal ini.
+
+Terlampir proposal komprehensif beserta kalkulasi valuasi benefit kami. Apakah kami dapat menjadwalkan temu daring 15 menit pada hari Kamis atau Jumat ini untuk mendiskusikan peluang aktivasi yang paling optimal?
+
+Terima kasih atas perhatian dan kesempatan kolaborasi berharga ini.
+
+Hormat kami,
+Divisi Kemitraan & Sponsorship
+${eventName}
+Kontak: partnership@event.id | 0812-XXXX-XXXX`;
+
+      } else if (format === 'wa') {
+        result = `Halo Selamat Pagi/Siang ${picName} dari tim ${targetBrand} 👋
+
+Perkenalkan saya [Nama Anda] dari Komite Penyelenggara *${eventName}* (${eventType}).
+
+Melihat visi ${targetBrand} yang sangat relevan dengan segmentasi ${audience}, kami ingin mengajak ${targetBrand} berkolaborasi dalam aktivasi brand eksklusif di event kami yang akan dihadiri ribuan audiens potensial secara on-ground.
+
+Kami telah menyiapkan slot *Official Partner* dengan exposure panggung LED, sampling booth, dan kampanye digital tertarget.
+
+Boleh izin kami kirimkan dokumen Deck Proposal 1 halaman untuk dipelajari lebih lanjut? Jika berkenan, kami sangat antusias untuk berdiskusi singkat 10 menit via call. 
+
+Terima kasih banyak atas waktunya, ${picName}! 🙏✨`;
+
+      } else if (format === 'verbal') {
+        result = `[Elevator Pitch 30 Detik - Langsung & Bertenaga]:
+
+"Halo [Nama PIC], tahukah Anda bahwa bulan depan ada lebih dari 3.000 orang dengan profil ${audience} berkumpul di satu tempat dalam ${eventName}?
+
+Kami melihat ${targetBrand} punya produk yang sangat mereka butuhkan, tapi belum ada aktivasi langsung di event kami. Kami tidak hanya memasang logo, kami menggaransi keterlibatan nyata—mulai dari booth interaktif hingga sampling langsung ke tangan calon konsumen Anda.
+
+Kami masih menyisakan 2 slot brand partner kategori ini sebelum lock-in proposal akhir pekan ini. Boleh saya minta kartu nama atau nomor WA untuk kirimkan detail slotnya hari ini?"`;
+
+      } else if (format === 'speech') {
+        result = `[Naskah Sambutan Penghargaan Sponsor di Panggung]:
+
+"Selamat malam dan selamat datang para hadirin yang luar biasa di ${eventName}!
+
+Terselenggaranya festival spektakuler malam ini tentu tidak lepas dari dukungan visioner para mitra terpercaya kami. Secara khusus, kami ingin memberikan apresiasi setinggi-tingginya kepada mitra utama kami:
+
+Tepuk tangan yang paling meriah untuk ${targetBrand}! 
+
+Terima kasih atas komitmen ${targetBrand} dalam mendukung kemajuan generasi muda dan suksesnya acara ini. Kepada seluruh hadirin, jangan lupa kunjungi booth interaktif ${targetBrand} di sisi panggung untuk menikmati berbagai promo dan pengalaman eksklusif yang telah disiapkan khusus untuk Anda malam ini.
+
+Terima kasih sekali lagi kepada ${targetBrand}—sahabat sejati ${eventName}!"`;
+      }
+
+      document.getElementById('script-output').textContent = result;
+      addHistory(`Generate naskah proposal (${format}) untuk ${targetBrand}`);
+    }
+
+    function copyGeneratedScript() {
+      const text = document.getElementById('script-output').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Naskah proposal berhasil disalin ke clipboard!');
+      }).catch(() => {
+        alert('Gagal menyalin, silakan salin teks secara manual.');
+      });
+    }
+
+    // 8. HISTORY RENDER
+    function renderHistory() {
+      const list = document.getElementById('history-log-list');
+      const countEl = document.getElementById('history-count');
+      countEl.textContent = appState.history.length;
+
+      if (appState.history.length === 0) {
+        list.innerHTML = `<div style="font-size:0.75rem; color:var(--text-muted); padding:6px 0;">Riwayat kosong.</div>`;
+        return;
+      }
+
+      list.innerHTML = appState.history.map(item => `
+        <div style="font-size:0.75rem; padding:6px 0; border-bottom:1px dashed var(--border-color); display:flex; justify-content:space-between; gap:10px;">
+          <span>${item.text}</span>
+          <span style="color:var(--text-muted); font-size:0.7rem; white-space:nowrap;">${item.time}</span>
+        </div>
+      `).join('');
+    }
+
+    // INITIAL BOOTSTRAP
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTheme(appState.theme);
+      checkAuth();
+      renderProspects();
+      renderInKind();
+      runValuationCalc();
+      renderPackages();
+      renderHandover();
+      loadReportData();
+      renderHistory();
+    });
+  </script>
+</body>
+</html>
